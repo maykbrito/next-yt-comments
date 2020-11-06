@@ -6,7 +6,9 @@
   </a>
 </p>
 
-> Fetch comments from Youtube video using NextJS and yt-comment-scraper
+> Fetch responseless comments from Youtube video using NextJS and yt-comment-scraper
+
+![Preview](https://i.imgur.com/nk44gLd.png)
 
 ## Install
 
