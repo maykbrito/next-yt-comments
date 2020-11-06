@@ -1,0 +1,59 @@
+.comments {
+    margin-top: 3rem;
+}
+
+.comment {
+    display: flex;
+    font-size: 1.4rem;
+    margin: 1.4rem 0;
+    width: 80%;
+}
+
+.info {
+    margin-left: 2rem;
+}
+
+.info>* {
+    margin-bottom: 0.1rem;
+}
+
+.info h3 {
+    font-size: 1.4rem;
+    margin:0;
+}
+
+.info h3 span {
+    color: #777;
+    font-weight: 200;
+    margin-left: 0.5rem;
+}
+
+.info div {
+    display: flex;
+    align-items: center;
+}
+
+.info svg{
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-right: 1rem;
+}
+
+.avatar img {
+    background-color: red;
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+}
+
+.info .material-icons {
+    color: #777;
+    font-size: 1.7rem;
+    margin-right: 1rem;
+}
+
+.info div a {
+    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+}

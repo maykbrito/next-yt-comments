@@ -62,6 +62,11 @@
   font-size: 1.5rem;
 }
 
+.description input {
+  padding: .8rem 1.6rem;
+  width: 100%;
+}
+
 .code {
   background: #fafafa;
   border-radius: 5px;

@@ -1,53 +1,62 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState, useEffect } from "react";
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+
+import Comments from "../components/Comments";
+import Loader from "../components/Loader";
+
+const baseAPI = "http://localhost:3000/api/comments?video=";
 
 export default function Home() {
+  const [comments, setComments] = useState([]);
+  const [videoId, setVideoId] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      if(videoId) {
+        const data = await fetch(baseAPI + videoId).then((response) =>
+          response.json()
+        );
+
+        setLoading(false);
+        setComments(data);
+      }
+    }
+
+    fetchData();
+  }, [videoId]);
+
+  function handleChange(ev) {
+    const value = ev.currentTarget.value;
+    if (value.length === 11) {
+      setLoading(true);
+      setVideoId(value);
+    }
+  }
+
+  const showComponent = loading === true ? { display: "none" } : { display: "initial" };
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <>
+    <Loader loading={loading}></Loader>
+    <div className={styles.container} style={ showComponent }>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
+        <h1 className={styles.title}>Fetch comments without responses</h1>
+        <p style={{fontSize: '1rem', color: "gray"}}>
+          Place video id below <em>https://www.youtube.com/watch?v=</em><strong>pbO3nnqyxlE</strong>
+        </p>
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          <input onChange={(ev) => handleChange(ev)} placeholder="videoId" disabled={loading}/>
         </p>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        {comments && comments.map((comment) => (
+            <Comments
+              key={comment.id}
+              comment={comment}
+              videoId={videoId}
+            ></Comments>
+          ))}
       </main>
 
       <footer className={styles.footer}>
@@ -56,10 +65,11 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
       </footer>
     </div>
-  )
+    </>
+  );
 }
